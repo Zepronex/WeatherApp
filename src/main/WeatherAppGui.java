@@ -15,22 +15,55 @@ class WeatherAppGUI extends JFrame {
 
 	public WeatherAppGUI() {
 		super("Weather App");
+
+		try {
+			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(400, 300);
 
 		initComponents(); // Initialize GUI components
 	}
 
 	public void createAndShowGUI() {
+		pack(); // Adjust window size based on components
+		setLocationRelativeTo(null); // Center the window on the screen
 		setVisible(true); // Make the GUI visible
 	}
 
 	private void initComponents() {
 		// Create components
 		cityTextField = new JTextField(20);
+		getWeatherButton = new JButton("Get Weather");
+
+		// Input panel with titled border and GridBagLayout for better alignment
+		JPanel inputPanel = new JPanel();
+		inputPanel.setBorder(BorderFactory.createTitledBorder("Enter City"));
+		inputPanel.setLayout(new GridBagLayout());
+		GridBagConstraints gbc = new GridBagConstraints();
+
+		gbc.insets = new Insets(5, 5, 5, 5); // Add padding between components
+
+		gbc.gridx = 0;
+		gbc.gridy = 0;
+		inputPanel.add(new JLabel("City: "), gbc);
+
+		gbc.gridx = 1;
+		gbc.gridy = 0;
+		inputPanel.add(cityTextField, gbc);
+
+		gbc.gridx = 2;
+		gbc.gridy = 0;
+		inputPanel.add(getWeatherButton, gbc);
+
+		// Result area with titled border and adjusted font
 		resultTextArea = new JTextArea(10, 30);
 		resultTextArea.setEditable(false); // Make result area read-only
-		getWeatherButton = new JButton("Get Weather");
+		resultTextArea.setFont(new Font("Serif", Font.PLAIN, 14));
+		JScrollPane scrollPane = new JScrollPane(resultTextArea);
+		scrollPane.setBorder(BorderFactory.createTitledBorder("Weather Data"));
 
 		// Add action listener to the button
 		getWeatherButton.addActionListener(new ActionListener() {
@@ -47,15 +80,8 @@ class WeatherAppGUI extends JFrame {
 			}
 		});
 
-		// Layout components using panels
-		JPanel inputPanel = new JPanel();
-		inputPanel.add(new JLabel("Enter City: "));
-		inputPanel.add(cityTextField);
-		inputPanel.add(getWeatherButton);
-
-		JScrollPane scrollPane = new JScrollPane(resultTextArea);
-
-		// Add panels to the frame
+		// Set layout manager for the frame and add components
+		getContentPane().setLayout(new BorderLayout(10, 10));
 		getContentPane().add(inputPanel, BorderLayout.NORTH);
 		getContentPane().add(scrollPane, BorderLayout.CENTER);
 	}

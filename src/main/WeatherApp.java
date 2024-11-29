@@ -9,8 +9,7 @@ public class WeatherApp {
         javax.swing.SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 WeatherAppGUI gui = new WeatherAppGUI();
-                gui.createAndShowGUI(); //display gui after initializing
-                
+                gui.createAndShowGUI(); // Display GUI after initializing
             }
         });
     }
